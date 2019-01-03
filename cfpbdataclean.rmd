@@ -58,9 +58,15 @@ levels(cfpb18$product) <- list(CheckingAccount="Checking or savings account", Ve
 table(cfpb18$company)
 ```
 
-## 07. Summarize complaints by company by product category
+## 07. Remove duplicate records
 ```{r}
-complaintsummary <- cfpb18 %>%
+dedupedcfpb18 <- cfpb18 %>% distinct(complaint_id, .keep_all = TRUE)
+```
+
+
+## 08. Summarize complaints by company by product category
+```{r}
+complaintsummary <- dedupedcfpb18 %>%
    group_by(product, company) %>%
    summarise(
      TotalComplaints = n()
